@@ -83,7 +83,7 @@ Syntax for indexing a document.
 - **id** is the unique identifier for the document.
 - With in curly braces, we provide the fields.
 
-<!-- Time: 6: 30 -->
+Time: 6: 30
 
 lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7283502#overview
 
