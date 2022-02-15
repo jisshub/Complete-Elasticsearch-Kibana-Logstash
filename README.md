@@ -82,3 +82,5 @@ Syntax for indexing a document.
 - **type** is the type of the document.
 - **id** is the unique identifier for the document.
 - With in curly braces, we provide the fields.
+
+<!-- Time: 6: 30 -->
