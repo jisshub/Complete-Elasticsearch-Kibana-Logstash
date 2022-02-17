@@ -13,6 +13,8 @@
 [Elasticsearch_Console_Link](http://localhost:5601/app/dev_tools#/console?load_from=https:/www.elastic.co/guide/en/elasticsearch/reference/current/snippets/1957.console
 )
 
+[Elasticsearch console](http://localhost:5601/app/dev_tools#/console)
+
 ## Creating an inverted index
 
 - To create an inverted index, we first split the content field of each document into separate words.
