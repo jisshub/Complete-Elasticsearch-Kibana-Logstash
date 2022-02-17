@@ -9,6 +9,10 @@
 - Elasticsearch uses a data structure called an inverted index that supports very fast full-text searches. 
 - An inverted index lists every unique word that appears in any document and identifies all of the documents each word occurs in.
 
+## Elastoc search Console
+[Elasticsearch_Console_Link](http://localhost:5601/app/dev_tools#/console?load_from=https:/www.elastic.co/guide/en/elasticsearch/reference/current/snippets/1957.console
+)
+
 ## Creating an inverted index
 
 - To create an inverted index, we first split the content field of each document into separate words.
@@ -87,3 +91,47 @@ Time: 6: 30
 
 lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7283502#overview
 
+## Dev Console 
+
+```console
+PUT /vehicles/_doc/1
+{
+  "make": "honda",
+  "milage": 8722,
+  "color": "red"
+}
+```
+
+vehicles - index name,
+
+_doc - document type,
+
+1 - document id
+
+- json part is the document we gave to elasticsearch.
+
+- Fields starting underscore are **meta fields**.
+eg: _idnex, _type, _id, _shards 
+
+- **_version** field gets updated each time we run the same query.
+
+**Success Message after creating index**:
+
+```json
+{
+  "_index" : "vehicles",
+  "_type" : "_doc",
+  "_id" : "1",
+  "_version" : 3,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 2,
+  "_primary_term" : 1
+}
+```
+
+Time: 13:00
