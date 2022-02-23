@@ -1,4 +1,4 @@
-# Elasticsearch Oevrview
+# Elasticsearch Overview
 
 ![](./IMAGES/image1.png)
 
@@ -330,6 +330,7 @@ GET vehicles/_doc/2
 ```bash
 DELETE vehicles/_doc/2
 ```
+- Here document with id 2 is deleted from index vehicles.
 
 - Result will look like this:
 
@@ -378,3 +379,80 @@ Result will look like this:
   "acknowledged" : true
 }
 ```
+
+## Components of an Index
+
+### Create Index
+
+Create index named *business* with type as *building*.
+
+```bash
+PUT /business/building/100
+{
+  "address": "56 New Dover",
+  "floors": 10,
+  "office": 21,
+  "loc":{
+    "lat": 60.8726378,
+    "lon": 89.2198372
+  }
+}
+```
+
+### Get structure of index
+
+```bash
+GET /business/
+```
+
+### Add another document to the index
+
+```bash
+PUT business/building/134
+{
+  "address": "89 New Dover",
+  "floors": 11,
+  "office": 90,
+  "price": 7921.90,
+  "loc":{
+    "lat": 10.8726378,
+    "lon": 49.2198372
+  }
+}
+```
+
+- This time we add another field **price** to the document.
+
+
+### Adding another document with different type to same index.
+
+```bash
+PUT /business/employee/344
+{
+  "name": "Jesse Ander",
+  "title": "Accountant",
+  "salary": 70000,
+  "hiredate": "Jan 20, 2021"
+}
+```
+
+- Shows exeception when we try to add another document with different type to same index.
+- Since business index has type as building, we can not add another document with type as employee.
+- We have to create new index with type as employee.
+- An index can support only one type.
+
+#### Create Employee Index
+
+```bash
+PUT /employee/_doc/344
+{
+  "name": "Jesse Ander",
+  "title": "Accountant",
+  "salary": 70000,
+  "hiredate": "Jan 20, 2021"
+}
+```
+
+**Index** - employee
+**Type** - _doc
+
