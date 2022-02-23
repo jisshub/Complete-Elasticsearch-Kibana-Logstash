@@ -456,3 +456,129 @@ PUT /employee/_doc/344
 **Index** - employee
 **Type** - _doc
 
+
+## Searching for Documents using Search API
+
+- We can search for business index and documents in it.
+
+```bash
+GET /business/_search/
+```
+
+Response will look like this:
+
+```bash
+  "hits" : {
+    "total" : {
+      "value" : 2,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "business",
+        "_type" : "building",
+        "_id" : "100",
+        "_score" : 1.0,
+        "_source" : {
+          "address" : "56 New Dover",
+          "floors" : 10,
+          "office" : 21,
+          "loc" : {
+            "lat" : 60.8726378,
+            "lon" : 89.2198372
+          }
+        }
+      },
+      {
+        "_index" : "business",
+        "_type" : "building",
+        "_id" : "134",
+        "_score" : 1.0,
+        "_source" : {
+          "address" : "89 New Dover",
+          "floors" : 11,
+          "office" : 90,
+          "price" : 7921.9,
+          "loc" : {
+            "lat" : 10.8726378,
+            "lon" : 49.2198372
+          }
+        }
+      }
+    ]
+  }
+}
+```
+
+- Here Documents are present in *hits.hits* array.
+
+## Term Query
+
+To search for a document matching a specific field.
+
+```bash
+GET /business/_search/
+{
+  "query": {
+    "term": {
+        "floors": 10
+    }
+  }
+}
+```
+
+- Above query will search for documents with **floors** field equal to 10 and returns matching document.
+
+
+**Example - 2**
+
+```bash
+GET /employee-api/_search/
+{
+  "query": {
+    "term": {
+      "role": "Developer"
+    }
+  }
+}
+```
+
+- Above query will search for documents with **role** field equal to Developer and returns matching document.
+
+## Match All Query
+
+Returns every documents inside an index.
+
+```bash
+GET /employee-api/_search/
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+- **match-all** query returns every documents inside **employee-api** index.
+
+
+**Example 2**
+
+```bash
+GET /employee/_search/
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+
+- **match-all** query returns every documents inside **employee** index.
+
+
+Up next:
+
+  Lecture 6: Distributed Execution  of Requests
+
+  
