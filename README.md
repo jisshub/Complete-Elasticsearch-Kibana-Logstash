@@ -577,8 +577,71 @@ GET /employee/_search/
 - **match-all** query returns every documents inside **employee** index.
 
 
-Up next:
+## Mapping Date formats
 
-  Lecture 6: Distributed Execution  of Requests
+- Create an index where we give type to each fields.
 
-  
+```bash
+  PUT purcharse-index
+  {
+    "mappings": {
+      "properties": {
+        "productId": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "text"
+        },
+        "price": {
+          "type": "float"
+        },
+        "purchaseDate": {
+          "type": "date",
+          "format": "yyyy-MM-dd"
+        }
+      }
+    }
+  }
+```
+
+## Get Data from Index
+
+```bash
+GET purcharse-index/_search
+```
+
+## Retrieve Data from Index by Date Range
+
+```bash
+GET /purcharse-index/_search
+{
+  "query": {
+    "range": {
+      "purchaseDate": {
+        "gte": "2021-09-01",
+        "lte": "2022-10-01"
+      }
+    }
+  }
+}
+```
+
+## Multi get (mget) APIedit
+
+- Retrieves multiple JSON documents by ID.
+
+```bash
+GET /_mget
+{
+  "docs": [
+    {
+      "_index": "purcharse-index",
+      "_id": 2
+    },
+    {
+      "_index": "purcharse-index",
+      "_id": 3
+    }     
+  ]
+}
+```
