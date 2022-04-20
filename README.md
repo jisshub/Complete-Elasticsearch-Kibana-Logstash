@@ -1232,6 +1232,21 @@ GET courses/_search
 Here we search for documents where course_description field contains the phrase *crucial topics related to raising capital and bonds*.
 
 
+**Example - 2**
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "match_phrase": {
+      "course_description": "teaches students how to read"
+    }
+  }
+}
+```
+
+Here we search for documents where course_description field contains the phrase *teaches students how to read*.
+
 time: 14: 50
 
 Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251278#content
