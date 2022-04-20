@@ -4,7 +4,7 @@
 
 [Elasticsearch Documents](#Elasticsearch-Documents)
 
-[Indexing, Retriving and Deleting Documents](#Indexing,-Retriving,-and-Deleteing-Documents)
+[Indexing, Retrieving and Deleting Documents](#Indexing,-Retriving-and-Deleting-Documents)
 
 [Dev Console](#Dev-Console)
 
@@ -88,7 +88,7 @@ An Example of a document:
 }
 ```
 
-# Indexing, Retriving and Deleting Documents
+# Indexing, Retrieving and Deleting Documents
 
 - In Elasticsearch, data is stored in to **index**.
 
