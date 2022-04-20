@@ -944,11 +944,166 @@ Here we can observe that text contents are broken up in to tokens, also words ar
 
 ## Simple Analyzer
 
-Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251270#overview
-
-
 Time: 9: 00
 
-```bash
+The **simple analyzer** breaks text into tokens at any non-letter character, such as numbers, spaces, hyphens and apostrophes, discards non-letter characters, and changes uppercase to lowercase.
 
+```bash
+POST _analyze
+{
+  "analyzer": "simple",
+  "text": "The 2 QUICK Brown-Foxes jumped over the lazy dog's box."
+}
+```
+
+
+**Result :**
+
+```bash
+{
+  "tokens" : [
+    {
+      "token" : "the",
+      "start_offset" : 0,
+      "end_offset" : 3,
+      "type" : "word",
+      "position" : 0
+    },
+    {
+      "token" : "quick",
+      "start_offset" : 6,
+      "end_offset" : 11,
+      "type" : "word",
+      "position" : 1
+    },
+    {
+      "token" : "brown",
+      "start_offset" : 12,
+      "end_offset" : 17,
+      "type" : "word",
+      "position" : 2
+    },
+    {
+      "token" : "foxes",
+      "start_offset" : 18,
+      "end_offset" : 23,
+      "type" : "word",
+      "position" : 3
+    },
+    {
+      "token" : "jumped",
+      "start_offset" : 24,
+      "end_offset" : 30,
+      "type" : "word",
+      "position" : 4
+    },
+    {
+      "token" : "over",
+      "start_offset" : 31,
+      "end_offset" : 35,
+      "type" : "word",
+      "position" : 5
+    },
+    {
+      "token" : "the",
+      "start_offset" : 36,
+      "end_offset" : 39,
+      "type" : "word",
+      "position" : 6
+    },
+    {
+      "token" : "lazy",
+      "start_offset" : 40,
+      "end_offset" : 44,
+      "type" : "word",
+      "position" : 7
+    },
+    {
+      "token" : "dog",
+      "start_offset" : 45,
+      "end_offset" : 48,
+      "type" : "word",
+      "position" : 8
+    },
+    {
+      "token" : "s",
+      "start_offset" : 49,
+      "end_offset" : 50,
+      "type" : "word",
+      "position" : 9
+    },
+    {
+      "token" : "box",
+      "start_offset" : 51,
+      "end_offset" : 54,
+      "type" : "word",
+      "position" : 10
+    }
+  ]
+}
+```
+
+# Search DSL Query Context
+
+**DSL** - Domain Specific Language
+
+Create *course* index with type *classroom*.
+A sample index is given below:
+
+```bash
+PUT /courses/classroom/4
+{
+    "name": "Computer Science 101",
+    "room": "C12",
+    "professor": {
+        "name": "Gregg Payne",
+        "department": "engineering",
+        "facutly_type": "full-time",
+        "email": "payneg@onuni.com"
+        },
+    "students_enrolled": 33,
+    "course_publish_date": "2013-08-27",
+    "course_description": "CS 101 is a first year computer science introduction teaching fundamental data structures and alogirthms using python. "
+}
+```
+
+## Search DSL Components
+
+**Query Context:**
+
+  This is used for full text searches. 
+
+**Filter Context:**
+
+  This is used for filtering the results.
+
+
+# Query Context
+
+## Match All Query
+
+Returns all documents in the index.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+## Match Query
+
+Returns the documents that match the query. Here it returns the documents having name field as *computer*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "match": {
+      "name": "computer"
+    }
+  }
+}
 ```
