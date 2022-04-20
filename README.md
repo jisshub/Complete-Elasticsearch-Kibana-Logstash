@@ -1,10 +1,10 @@
 [Elasticsearch Overview](#Elasticsearch-Overview) 
 
-[Creating an inverted index](#Creating-an-inverted-index)
+[Creating an Inverted Index](#Creating-an-inverted-index)
 
 [Elasticsearch Documents](#Elasticsearch-Documents)
 
-[Indexing, Retriving and Deleteing Documents](#Indexing,-Retriving,-and-Deleteing-Documents)
+[Indexing, Retriving and Deleting Documents](#Indexing,-Retriving,-and-Deleteing-Documents)
 
 [Dev Console](#Dev-Console)
 
@@ -28,7 +28,7 @@
 
 [Retrieve Data from Index by Date Range](#Retrieve-Data-from-Index-by-Date-Range)
 
-[Multi get (mget) API](#Multi-get-(mget)-API)
+[Multi get mget API](#Multi-get-mget-API)
 
 
 # Elasticsearch Overview
