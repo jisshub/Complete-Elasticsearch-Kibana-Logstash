@@ -1107,3 +1107,47 @@ GET courses/_search
   }
 }
 ```
+
+Returns the documents with department of professor as *engineering*.
+
+```bash 
+GET courses/_search
+{
+  "query": {
+    "match": {
+      "professor.department": "engineering"
+    }
+  }
+}
+```
+
+## Match Multiple Queries
+
+Returns the documents that matches bpth match query. For example, if want to get documents which having fields name as *computer* and department as *engineering*.
+
+We couple *must* array with *match* query in this case. Later we dump this *must* list into *bool* array.
+
+**Console:**
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {
+          "name": "computer"
+        }},
+        {"match": {
+          "room": "c8"
+        }}
+      ]
+    }
+  }
+}
+```
+
+Here we return the documents from **courses** index which having fields name as *computer* and room as *c8*.
+
+
+
