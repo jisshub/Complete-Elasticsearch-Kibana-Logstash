@@ -1217,9 +1217,22 @@ GET courses/_search
 
 ## Match Phrase Query
 
+Returns the documents that matches the phrase query. We specify the field and query to search in.
+
 ```bash
-
+GET courses/_search
+{
+  "query": {
+    "match_phrase": {
+      "course_description": "crucial topics related to raising capital and bonds"
+    }
+  }
+}
 ```
+Here we search for documents where course_description field contains the phrase *crucial topics related to raising capital and bonds*.
 
-time: 12: 55
+
+time: 14: 50
+
+Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251278#content
 
