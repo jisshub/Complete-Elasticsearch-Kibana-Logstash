@@ -1160,7 +1160,7 @@ GET courses/_search
 
 Here we return the documents from **courses** index which having fields name as *computer* and room as *c8*.
 
-# Search DSL Query Context - Part 2
+# Search DSL Query Context Part 2
 
 ## Must Not Condition
 
