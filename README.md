@@ -1,3 +1,36 @@
+[Elasticsearch Overview](#Elasticsearch-Overview) 
+
+[Creating an inverted index](#Creating-an-inverted-index)
+
+[Elasticsearch Documents](#Elasticsearch-Documents)
+
+[Indexing, Retriving and Deleteing Documents](#Indexing,-Retriving,-and-Deleteing-Documents)
+
+[Dev Console](#Dev-Console)
+
+[Using GET Method](#Using-GET-Method)
+
+[Using HEAD Method](#Using-HEAD-Method)
+
+[Using PUT Method](#Using-PUT-Method)
+
+[Using UPDATE API](#Using-UPDATE-API)
+
+[Using DELETE Method](#Using-DELETE-Method)
+
+[Components of an Index](#Components-of-an-Index)
+
+[Term Query](#Term-Query)
+
+[Match All Query](#Match-All-Query)
+
+[Mapping Date Formats](#Mapping-Date-Formats)
+
+[Retrieve Data from Index by Date Range](#Retrieve-Data-from-Index-by-Date-Range)
+
+[Multi get (mget) API](#Multi-get-(mget)-API)
+
+
 # Elasticsearch Overview
 
 ![](./IMAGES/image1.png)
@@ -9,13 +42,13 @@
 - Elasticsearch uses a data structure called an inverted index that supports very fast full-text searches. 
 - An inverted index lists every unique word that appears in any document and identifies all of the documents each word occurs in.
 
-## Elastoc search Console
+### ElasticSearch Console
 [Elasticsearch_Console_Link](http://localhost:5601/app/dev_tools#/console?load_from=https:/www.elastic.co/guide/en/elasticsearch/reference/current/snippets/1957.console
 )
 
 [Elasticsearch console](http://localhost:5601/app/dev_tools#/console)
 
-## Creating an inverted index
+# Create an Inverted Index
 
 - To create an inverted index, we first split the content field of each document into separate words.
 - Create a sorted list of all the unique terms.
@@ -25,7 +58,7 @@
 ![](./IMAGES/image2.png)
 
 
-## Elasticsearch Documents
+# Elasticsearch Documents
 
 Elasticsearch documents are stored in a JSON format.
 
@@ -51,12 +84,11 @@ An Example of a document:
    "age": 28,
    "name": ["daniel”],
    "year":1989,
+  }
 }
-}
-
 ```
 
-## Indexing, Retriving and Deleting Documents
+# Indexing, Retriving and Deleting Documents
 
 - In Elasticsearch, data is stored in to **index**.
 
@@ -93,7 +125,7 @@ Time: 6: 30
 
 lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7283502#overview
 
-## Dev Console 
+# Dev Console 
 
 ```console
 PUT /vehicles/_doc/1
@@ -136,7 +168,7 @@ eg: _idnex, _type, _id, _shards
 }
 ```
 
-### Using GET method
+# Using GET Method
 
 ```bash
 GET /vehicles/_doc/1
@@ -179,7 +211,7 @@ GET /vehicles/_doc/2/_source
 
 Here we get the document without the meta fields.
 
-## Using HEAD Method
+# Using HEAD Method
 
 To check the existence of document, we use HEAD method.
 
@@ -190,7 +222,7 @@ HEAD /vehicles/_doc/1
 - If document exist, we will get a 200 status code.
 - if documnet does not exist, we will get a 404 status code.
 
-## Using PUT method
+# Using PUT method
 
 To update the document, we use the PUT method.
 
@@ -215,7 +247,7 @@ PUT /vehicles/_doc/1
 }
 ```
 
-- When we update using PUT method, it not only update that sepcific field, but the entire document.
+- When we update using PUT method, it not only update that specific field, but the entire document.
 - It is different from databases where we can update specific fields only.
 - Here we are re indexing the document means inserting a new document with the udpated fields.
 
@@ -241,7 +273,7 @@ We get the following response after updating the document:
 This how updating documents in elasticsearch works.
 
 
-## Using UPDATE API
+# Using UPDATE API
 
 ```bash
 POST vehicles/_doc/1/_update
@@ -298,7 +330,7 @@ POST vehicles/_doc/2/_update
 
 - Inserted **total_price** field to the document with id 2. 
 
-#### Verify the changes in the document:
+## Verify the changes in the document:
 
 
 ```bash
@@ -325,11 +357,12 @@ GET vehicles/_doc/2
 }
 ```
 
-## Deleting the Document using DELETE method
+# Using DELETE Method
 
 ```bash
 DELETE vehicles/_doc/2
 ```
+
 - Here document with id 2 is deleted from index vehicles.
 
 - Result will look like this:
@@ -380,9 +413,9 @@ Result will look like this:
 }
 ```
 
-## Components of an Index
+# Components of an Index
 
-### Create Index
+## Create Index
 
 Create index named *business* with type as *building*.
 
@@ -399,7 +432,7 @@ PUT /business/building/100
 }
 ```
 
-### Get structure of index
+### Get Structure of index
 
 ```bash
 GET /business/
@@ -424,7 +457,7 @@ PUT business/building/134
 - This time we add another field **price** to the document.
 
 
-### Adding another document with different type to same index.
+### Add a document with different type to same index.
 
 ```bash
 PUT /business/employee/344
@@ -441,7 +474,7 @@ PUT /business/employee/344
 - We have to create new index with type as employee.
 - An index can support only one type.
 
-#### Create Employee Index
+### Create Employee Index
 
 ```bash
 PUT /employee/_doc/344
@@ -453,11 +486,12 @@ PUT /employee/_doc/344
 }
 ```
 
-**Index** - employee
-**Type** - _doc
+**Index:** employee
+
+**Type:** _doc
 
 
-## Searching for Documents using Search API
+## Search for Documents using _Search API
 
 - We can search for business index and documents in it.
 
@@ -513,7 +547,7 @@ Response will look like this:
 
 - Here Documents are present in *hits.hits* array.
 
-## Term Query
+# Term Query
 
 To search for a document matching a specific field.
 
@@ -546,7 +580,7 @@ GET /employee-api/_search/
 
 - Above query will search for documents with **role** field equal to Developer and returns matching document.
 
-## Match All Query
+# Match All Query
 
 Returns every documents inside an index.
 
@@ -577,9 +611,9 @@ GET /employee/_search/
 - **match-all** query returns every documents inside **employee** index.
 
 
-## Mapping Date formats
+# Mapping Date Formats
 
-- Create an index where we give type to each fields.
+- Create an index where we give type to each fields. For date field, we input *type* and *format*.
 
 ```bash
   PUT purcharse-index
@@ -604,13 +638,15 @@ GET /employee/_search/
   }
 ```
 
-## Get Data from Index
+### Get Data from Index
 
 ```bash
 GET purcharse-index/_search
 ```
 
-## Retrieve Data from Index by Date Range
+# Retrieve Data from Index by Date Range
+
+- We pass date range in query. Set **lte** and **gte** property to set the start and end date.
 
 ```bash
 GET /purcharse-index/_search
@@ -626,10 +662,10 @@ GET /purcharse-index/_search
 }
 ```
 
-## Multi get (mget) APIedit
+# Multi get (mget) API
 
 - Retrieves multiple JSON documents by ID.
-
+- Pass **index** and **id** property
 ```bash
 GET /_mget
 {
@@ -645,3 +681,4 @@ GET /_mget
   ]
 }
 ```
+
