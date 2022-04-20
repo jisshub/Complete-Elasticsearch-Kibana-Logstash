@@ -40,6 +40,8 @@
 
 [Query Context](#Query-Context)
 
+[Search DSL Query Context Part 2](#Search-DSL-Query-Context-Part-2)
+
 
 # Elasticsearch Overview
 
@@ -1250,4 +1252,6 @@ Here we search for documents where course_description field contains the phrase 
 time: 14: 50
 
 Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251278#content
+
+
 
