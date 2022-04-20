@@ -1158,5 +1158,68 @@ GET courses/_search
 
 Here we return the documents from **courses** index which having fields name as *computer* and room as *c8*.
 
+# Search DSL Query Context - Part 2
 
+## Must Not Condition
+
+Set **must not** condition in query to return documents which doesn't match the query.
+
+Below we get the documents which doesnt have department of professor as *engineering*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "must_not": [
+        {"match": {
+          "professor.department": "engineering"
+        }}
+      ]
+    }
+  }
+}
+```
+
+## Multi Match Query
+
+We can use **multi-match** query to search for documents that matches the given query. Here we specify the **multiple fields** and query to search in.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "finance",
+      "fields": ["name", "professor.department"]
+    }
+  }
+}
+```
+
+- Here we get documents with name as *finance* or professor department as *finance*. So either of these fields must match the query.
+
+**Example - 2**
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "e3",
+      "fields": ["room", "professor.email"]
+    }
+  }
+}
+```
+
+- Here we get documents with room as *e3* or professor email as *e3*. So either of these fields must match the query.
+
+## Match Phrase Query
+
+```bash
+
+```
+
+time: 12: 55
 
