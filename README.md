@@ -682,3 +682,273 @@ GET /_mget
 }
 ```
 
+# Index Settings and Mapping
+
+- Create new index with settings and mappings properties.
+
+```bash
+PUT customer
+{
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1
+  },
+  "mappings": {}
+}
+```
+
+- Define mapping for each field. We pass types and format of each field. We again use **PUT** method here. We specify **properties**. Inside **properties**, we specify the **fields**.
+
+```bash
+PUT /customer
+{
+  "mappings": {
+    "properties": {
+      "gender": {
+        "type": "text",
+        "analyzer": "standard"
+      },
+      "age": {
+        "type": "integer"
+      },
+      "total_spent": {
+        "type": "float"
+      },
+      "is_new": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "standard"
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1
+  }
+}
+```
+
+- *online* is the name of mapping.
+- Inside *properties*, we specify the *fields*.
+- *gender*, *age*, *total_spent*, *is_new* and *name* are the fields.
+
+### Analyzer Property of a Field
+**standard analyzer** splits the text on whitespace, lowercases it and removes non-alphanumeric characters.
+
+Example:
+
+```bash
+"gender": {
+  "type": "text",
+  "analyzer": "standard"
+}
+```
+
+### Get Document
+
+```bash
+GET customer/_search
+```
+
+### Insert a document to customer index.
+
+```bash
+PUT customer/_doc/1
+{
+  "gender": "male",
+  "age": 22,
+  "total_spent": 4000,
+  "is_new": false,
+  "name": "Imtiaz"
+}
+```
+
+# Adding dynamic property to index.
+
+Set dynamic property to mapping.
+
+**dynamic**:
+
+If set to **false** - Indexing field will be ignored. I.e. if we set **dynamic** to **false**, then we can't add new fields to index.
+
+If set to **strict** - Indexing field will throw error. I.e. if we set **dynamic** to **strict**, then while adding a new field error is thrown to user.
+
+To set dynamic propety to mapping we use PUT method. Pass dynamic property in **mappings**.
+
+```bash
+PUT customer
+{
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+        "online": {
+          "properties": {
+            "gender": {
+              "type": "text",
+              "analyzer": "standard"
+            },
+            "age": {
+              "type": "integer"
+            },
+            "total_spent": {
+              "type": "float"
+            },
+            "is_new": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "text",
+              "analyzer": "standard"
+            }
+        }
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": 2,
+    "number_of_replicas": 1
+  }
+}
+```
+
+# Understanding Analyzer
+
+
+## Whitespace Analyzer
+```bash
+POST _analyze
+{
+  "analyzer": "whitespace",
+  "text": "The quick brown fox is here"
+}
+```
+
+**Result :**
+
+```bash
+{
+  "tokens" : [
+    {
+      "token" : "The",
+      "start_offset" : 0,
+      "end_offset" : 3,
+      "type" : "word",
+      "position" : 0
+    },
+    {
+      "token" : "quick",
+      "start_offset" : 4,
+      "end_offset" : 9,
+      "type" : "word",
+      "position" : 1
+    },
+    {
+      "token" : "brown",
+      "start_offset" : 10,
+      "end_offset" : 15,
+      "type" : "word",
+      "position" : 2
+    },
+    {
+      "token" : "fox",
+      "start_offset" : 16,
+      "end_offset" : 19,
+      "type" : "word",
+      "position" : 3
+    },
+    {
+      "token" : "is",
+      "start_offset" : 20,
+      "end_offset" : 22,
+      "type" : "word",
+      "position" : 4
+    },
+    {
+      "token" : "here",
+      "start_offset" : 23,
+      "end_offset" : 27,
+      "type" : "word",
+      "position" : 5
+    }
+  ]
+}
+```
+
+Here we can observe that text contents are broken up in to tokens based on the **whitespace** analyzer.
+
+
+## Standard Analyzer
+
+```bash
+POST _analyze
+{
+  "analyzer": "standard",
+  "text": "The quick brown fox is here"
+}
+```
+
+**Result :**
+
+```bash
+{
+  "tokens" : [
+    {
+      "token" : "the",
+      "start_offset" : 0,
+      "end_offset" : 3,
+      "type" : "<ALPHANUM>",
+      "position" : 0
+    },
+    {
+      "token" : "quick",
+      "start_offset" : 4,
+      "end_offset" : 9,
+      "type" : "<ALPHANUM>",
+      "position" : 1
+    },
+    {
+      "token" : "brown",
+      "start_offset" : 10,
+      "end_offset" : 15,
+      "type" : "<ALPHANUM>",
+      "position" : 2
+    },
+    {
+      "token" : "fox",
+      "start_offset" : 16,
+      "end_offset" : 19,
+      "type" : "<ALPHANUM>",
+      "position" : 3
+    },
+    {
+      "token" : "is",
+      "start_offset" : 20,
+      "end_offset" : 22,
+      "type" : "<ALPHANUM>",
+      "position" : 4
+    },
+    {
+      "token" : "here",
+      "start_offset" : 23,
+      "end_offset" : 27,
+      "type" : "<ALPHANUM>",
+      "position" : 5
+    }
+  ]
+}
+```
+
+Here we can observe that text contents are broken up in to tokens, also words are converted to lowercase by using **standard** analyzer.
+
+## Simple Analyzer
+
+Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251270#overview
+
+
+Time: 9: 00
+
+```bash
+
+```
