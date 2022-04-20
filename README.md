@@ -4,7 +4,7 @@
 
 [Elasticsearch Documents](#Elasticsearch-Documents)
 
-[Indexing, Retrieving and Deleting Documents](#Indexing,-Retriving-and-Deleting-Documents)
+[Indexing, Retrieving and Deleting Documents](#Indexing,-Retrieving-and-Deleting-Documents)
 
 [Dev Console](#Dev-Console)
 
