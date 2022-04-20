@@ -42,6 +42,9 @@
 
 [Search DSL Query Context Part 2](#Search-DSL-Query-Context-Part-2)
 
+[Range Query](#Range-Query)
+
+[Search DSL Filter Context](#Search-DSL-Filter-Context)
 
 # Elasticsearch Overview
 
@@ -1251,7 +1254,106 @@ Here we search for documents where course_description field contains the phrase 
 
 time: 14: 50
 
-Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251278#content
+# Range Query
 
+To return documents that matches the range query. We specify the field and range.
+range is specified on student_enrolled field here. 
+
+**gte** - greater than or equal to.
+
+**lte** - less than or equal to.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "range": {
+      "students_enrolled": {
+        "gte": 10,
+        "lte": 20
+      }
+    }
+  }
+}
+```
+
+**Example - 2**
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "range": {
+      "students_enrolled": {
+        "gt": 20,
+        "lt": 30
+      }
+    }
+  }
+}
+```
+
+## Range Query on Dates
+
+- Here we specify the range on course_publish_date field. Return documents where course_publish_date is greater than or equal to 2015-01-01 and less than or equal to 2016-01-01.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "range": {
+      "course_publish_date": {
+        "gte": "2015-01-01",
+        "lte": "2016-01-01"
+      }
+    }
+  }
+}
+```
+
+# Search DSL Filter Context
+
+Filter context is used to filter the results.
+
+Here we filter out the documents that have name field as *accounting*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {"match": {
+          "name": "accounting" 
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+**Example - 2**
+
+Here we filter out the documents having department of professor as *finance*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {"match": {
+          "professor.department": "finance" 
+        }}
+      ]
+    }
+  }
+}
+```
+
+**Time** - 5:00
+
+**Lecture**: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251286#overview
 
 
