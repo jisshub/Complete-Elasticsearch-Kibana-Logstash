@@ -30,6 +30,15 @@
 
 [Multi get mget API](#Multi-get-mget-API)
 
+[Index Settings and Mappings](#Index-Settings-and-Mappings)
+
+[Adding dynamic property to index](#Adding-dynamic-property-to-index)
+
+[Understanding Analyzer](#Understanding-Analyzer)
+
+[Search DSL Query Context](#Search-DSL-Query-Context)
+
+[Query Context](#Query-Context)
 
 # Elasticsearch Overview
 
@@ -814,7 +823,6 @@ PUT customer
 ```
 
 # Understanding Analyzer
-
 
 ## Whitespace Analyzer
 ```bash
