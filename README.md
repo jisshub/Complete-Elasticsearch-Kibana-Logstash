@@ -30,7 +30,7 @@
 
 [Multi get mget API](#Multi-get-mget-API)
 
-[Index Settings and Mappings](#Index-Settings-and-Mappings)
+[Index Settings and Mapping](#Index-Settings-and-Mapping)
 
 [Adding dynamic property to index](#Adding-dynamic-property-to-index)
 
@@ -39,6 +39,7 @@
 [Search DSL Query Context](#Search-DSL-Query-Context)
 
 [Query Context](#Query-Context)
+
 
 # Elasticsearch Overview
 
