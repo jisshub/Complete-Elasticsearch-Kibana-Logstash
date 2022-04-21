@@ -46,6 +46,10 @@
 
 [Search DSL Filter Context](#Search-DSL-Filter-Context)
 
+[Aggregations DSL Part 1](#Aggregations-DSL-Part-1)
+
+[Aggregations DSL Part 2](#Aggregations-DSL-Part-2)
+
 # Elasticsearch Overview
 
 ![](./IMAGES/image1.png)
@@ -1886,10 +1890,9 @@ GET vehicles/cars/_search
     }
   }
 }
-
-
 ```
-Time: 1: 20
+
+Time: 7: 00
 
 Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251304#overview
 
