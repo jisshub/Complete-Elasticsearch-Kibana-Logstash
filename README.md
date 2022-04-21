@@ -1313,6 +1313,9 @@ GET courses/_search
 
 # Search DSL Filter Context
 
+
+## Using filter and match Query
+
 Filter context is used to filter the results.
 
 Here we filter out the documents that have name field as *accounting*.
@@ -1351,6 +1354,103 @@ GET courses/_search
   }
 }
 ```
+
+## Using multiple match queries with filter
+
+**Task :**
+
+Filter out the documents where **room** field is *e3* and **faculty type** of professor is *finance*.
+
+```bash
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {"match": {
+          "room": "e3"
+        }},
+        {
+          "match": {
+            "professor.facutly_type": "part-time"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+## Using match and date range query with filter.
+
+**Task:** 
+
+Filter out the documents where **name** matches *accounting* and **course_publish_date** is greater than or equal to *2015-01-01* and less than or equal to *2016-01-01*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "match": {
+            "name": "accounting"
+          }
+        },
+        {
+          "range": {
+            "course_publish_date": {
+              "gte": "2015-01-01",
+              "lte": "2016-01-01"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+## Using match and must not query with filter.
+
+**Task:**
+
+Filter out the documents where **name** matches *accounting* and **professor department** is not *finance*.
+
+```bash
+GET courses/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "student_enrolled": {
+                  "gte": 20
+                }
+              }
+            }
+          ]
+        }
+      },
+      "should": [
+        {
+        "match": {
+          "professor.department": 
+            "finance"
+        }
+      }
+    ]
+    }
+  }
+}
+```
+
 
 **Time** - 5:00
 
