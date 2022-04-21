@@ -50,6 +50,10 @@
 
 [Aggregations DSL Part 2](#Aggregations-DSL-Part-2)
 
+[Download and Configure Logstash](#Download-and-Configure-Logstash)
+
+[Logstash Overview and Indexing Apache Application Logs](#Logstash-Overview-and-Indexing-Apache-Application-Logs)
+
 # Elasticsearch Overview
 
 ![](./IMAGES/image1.png)
@@ -1898,19 +1902,36 @@ GET vehicles/cars/_search
 
 **Description :**
 
-First stage is to get the data into the pipeline from the *Data Sources*. Then data goes into *Inputs*. After there is a filtering process where we can filter out the data we want and ignore the data we dont want. Through *Outputs* data reaches the *Data Destinations*. So there are 3 stages:
+First stage is to get the data into the pipeline from the *Data Sources*. Then data goes into *Inputs*. After, there is a filtering process where we can filter out the data we want and ignore the data we dont want. Through *Outputs* data reaches the *Data Destinations*. So there are 3 stages:
 
 1. **Inputs**
 2. **Filters**
 3. **Outputs**
+  
+## Install and Configure Logstash
 
+1. Go to below link:
 
+https://www.elastic.co/downloads/logstash
 
+2. Choose platform and download the file.
 
+3. Extract the file.
 
+4. Open the terminal in which folder you extracted the file.
+
+5. Navigate to the logstash folder.
+
+6. Run the following command:
+ 
 ```bash
-
+$ bin/logstash -e 'input { stdin {}} output {stdout {}}'
 ```
+
+# Logstash Overview and Indexing Apache Application Logs
+
+
+
 
 Time - 7:00
 
