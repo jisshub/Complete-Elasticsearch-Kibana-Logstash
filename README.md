@@ -1892,7 +1892,27 @@ GET vehicles/cars/_search
 }
 ```
 
-Time: 7: 00
+# Download and Configure Logstash
+
+![](./IMAGES/image_22.png)
+
+**Description :**
+
+First stage is to get the data into the pipeline from the *Data Sources*. Then data goes into *Inputs*. After there is a filtering process where we can filter out the data we want and ignore the data we dont want. Through *Outputs* data reaches the *Data Destinations*. So there are 3 stages:
+
+1. **Inputs**
+2. **Filters**
+3. **Outputs**
+
+
+
+
+
+```bash
+
+```
+
+Time - 7:00
 
 Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251304#overview
 
