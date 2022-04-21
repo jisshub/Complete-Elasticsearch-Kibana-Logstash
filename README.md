@@ -1814,6 +1814,81 @@ Count, min, max, avg, sum are the properties of the stats object. So we get all 
 *stats_on_price* - default name given to aggregation.
 
 
+## Using range query with aggregations
+
+Return the documents based on fields date range and sold.
+
+```bash
+GET vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      },
+      "aggs": {
+        "sold_date_ranges": {
+          "range": {
+            "field": "sold",
+            "ranges": [
+              {
+                "from": "2016-01-01",
+                "to": "2016-05-18"
+              },
+              {
+                "from": "2016-05-18",
+                "to": "2017-01-01"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Task:** 
+
+Find average price of vehicles sold in the given date range.
+
+
+```bash
+GET vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      },
+      "aggs": {
+        "sold_date_ranges": {
+          "range": {
+            "field": "sold",
+            "ranges": [
+              {
+                "from": "2016-01-01",
+                "to": "2016-05-18"
+              },
+              {
+                "from": "2016-05-18",
+                "to": "2017-01-01"
+              }
+            ]
+          }
+        },
+        "average_car_price": {
+          "avg": {
+            "field": "price"
+          }
+        }
+      }
+    }
+  }
+}
+
+
+```
 Time: 1: 20
 
 Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251304#overview
