@@ -1730,10 +1730,97 @@ GET /vehicles/cars/_search
 }
 ```
 
+## Using query context with aggregations
+
+Here we apply the aggregations on documents that have field *color* as red.
+
+```bash
+GET /vehicles/cars/_search
+{
+  "query": {
+    "match": {
+      "color": "white"
+    }
+  },
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      }
+    },
+    "average_car_price": {
+      "avg": {
+        "field": "price"
+      }
+    },
+    "min_price": {
+      "min": {
+        "field": "price"
+      }
+    },
+    "max_price": {
+      "max": {
+        "field": "price"
+      }
+    }
+  }
+}
+```
+
+# Aggregation DSL Part 2
+
+## Stats Property
+
+**stats** property helps to perform all the aggregations at once.
+
+```bash
+GET vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      },
+    "aggs": {
+      "stats_on_price": {
+        "stats": {
+          "field": "price"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Result Look like this**
+
+```bash
+{
+  "key" : "dodge",
+  "doc_count" : 5,
+  "stats_on_price" : {
+    "count" : 5,
+    "min" : 10000.0,
+    "max" : 35000.0,
+    "avg" : 18900.0,
+    "sum" : 94500.0
+  }
+}
+```
+
+Count, min, max, avg, sum are the properties of the stats object. So we get all aggregations at once.
+
+*stats_on_price* - default name given to aggregation.
 
 
-**Time** - 5:00
+Time: 1: 20
 
-**Lecture**: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251286#overview
+Lecture: https://www.udemy.com/course/complete-elasticsearch-masterclass-with-kibana-and-logstash/learn/lecture/7251304#overview
+
+
+
+
+
 
 
