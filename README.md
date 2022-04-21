@@ -1451,6 +1451,286 @@ GET courses/_search
 }
 ```
 
+# Aggregations DSL Part 1
+
+## Bulk Insert of Documents
+
+```bash
+POST /vehicles/cars/_bulk
+{ "index": {}}
+{ "price" : 10000, "color" : "white", "make" : "honda", "sold" : "2016-10-28", "condition": "okay"}
+{ "index": {}}
+{ "price" : 20000, "color" : "white", "make" : "honda", "sold" : "2016-11-05", "condition": "new" }
+{ "index": {}}
+{ "price" : 30000, "color" : "green", "make" : "ford", "sold" : "2016-05-18", "condition": "new" }
+{ "index": {}}
+{ "price" : 15000, "color" : "blue", "make" : "toyota", "sold" : "2016-07-02", "condition": "good" }
+{ "index": {}}
+{ "price" : 12000, "color" : "green", "make" : "toyota", "sold" : "2016-08-19" , "condition": "good"}
+{ "index": {}}
+{ "price" : 18000, "color" : "red", "make" : "dodge", "sold" : "2016-11-05", "condition": "good"  }
+{ "index": {}}
+{ "price" : 80000, "color" : "red", "make" : "bmw", "sold" : "2016-01-01", "condition": "new"  }
+{ "index": {}}
+{ "price" : 25000, "color" : "blue", "make" : "ford", "sold" : "2016-08-22", "condition": "new"  }
+{ "index": {}}
+{ "price" : 10000, "color" : "gray", "make" : "dodge", "sold" : "2016-02-12", "condition": "okay" }
+{ "index": {}}
+{ "price" : 19000, "color" : "red", "make" : "dodge", "sold" : "2016-02-12", "condition": "good" }
+{ "index": {}}
+{ "price" : 20000, "color" : "red", "make" : "chevrolet", "sold" : "2016-08-15", "condition": "good" }
+{ "index": {}}
+{ "price" : 13000, "color" : "gray", "make" : "chevrolet", "sold" : "2016-11-20", "condition": "okay" }
+{ "index": {}}
+{ "price" : 12500, "color" : "gray", "make" : "dodge", "sold" : "2016-03-09", "condition": "okay" }
+{ "index": {}}
+{ "price" : 35000, "color" : "red", "make" : "dodge", "sold" : "2016-04-10", "condition": "new" }
+{ "index": {}}
+{ "price" : 28000, "color" : "blue", "make" : "chevrolet", "sold" : "2016-08-15", "condition": "new" }
+{ "index": {}}
+{ "price" : 30000, "color" : "gray", "make" : "bmw", "sold" : "2016-11-20", "condition": "good" }
+```
+
+## Get document - Using size property with query
+
+```bash
+GET vehicles/cars/_search
+{
+  "size": 20,
+  "query": {
+    "match_all": {}
+  }
+}
+```
+
+## Using Sort in Query 
+
+Sort by price in descending order.
+
+```bash
+GET vehicles/cars/_search
+{
+  "from": 0,
+  "size": 5,
+  
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "price": {
+        "order": "desc"
+      }
+    }
+      
+  ]
+}
+```
+
+**Example - 2**
+
+Sort by sold date in descending order.
+
+```bash
+GET vehicles/cars/_search
+{
+  "from": 0,
+  "size": 5,
+  
+  "query": {
+    "match_all": {}
+  },
+  
+  "sort": [
+    {
+      "sold": {
+        "order": "desc"
+      }
+    }
+      
+  ]
+}
+```
+
+## Using Count API
+
+Give the number of documents in the collection that match the query.
+
+Here we get the count of documents with **make** field as *dodge*.
+
+```bash
+GET vehicles/cars/_count
+{
+  "query": {
+    "match": {
+      "make": "dodge"
+    }
+  }
+}
+```
+
+## Using Aggregations
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
+
+
+**Syntax:**
+
+```bash
+GET /my-index-000001/_search
+{
+  "size": 0,
+  "aggs": {
+    "my-agg-name": {
+      "terms": {
+        "field": "my-field"
+      }
+    }
+  }
+}
+```
+
+Here we can find that more cars are sold for makers *dodge*.
+
+```bash
+GET vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      }
+    }
+  }
+}
+```
+
+**Result :**
+
+```bash
+  "aggregations" : {
+    "popular_cars" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "dodge",
+          "doc_count" : 5
+        },
+        {
+          "key" : "chevrolet",
+          "doc_count" : 3
+        },
+        {
+          "key" : "bmw",
+          "doc_count" : 2
+        },
+        {
+          "key" : "ford",
+          "doc_count" : 2
+        },
+        {
+          "key" : "honda",
+          "doc_count" : 2
+        },
+        {
+          "key" : "toyota",
+          "doc_count" : 2
+        }
+      ]
+    }
+  }
+```
+
+## Using multiple fields in aggregations
+
+Here we aggregate based on popular cars and average car prices.
+
+```bash
+GET /vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      }
+    },
+    "average_car_price": {
+      "avg": {
+        "field": "price"
+      }
+    }
+  }
+}
+```
+
+**Result :**
+
+```bash
+ "aggregations" : {
+    "popular_cars" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "dodge",
+          "doc_count" : 5
+        },
+        {
+          "key" : "chevrolet",
+          "doc_count" : 3
+        },
+        {
+          "key" : "bmw",
+          "doc_count" : 2
+        },
+        {
+          "key" : "ford",
+          "doc_count" : 2
+        },
+        {
+          "key" : "honda",
+          "doc_count" : 2
+        },
+        {
+          "key" : "toyota",
+          "doc_count" : 2
+        }
+      ]
+    },
+    "average_car_price" : {
+      "value" : 23593.75
+    }
+```
+
+**Example - 2**
+
+Aggregate on popular_cars, average_car_price and maximum price.
+
+```bash
+GET /vehicles/cars/_search
+{
+  "aggs": {
+    "popular_cars": {
+      "terms": {
+        "field": "make.keyword"
+      }
+    },
+    "average_car_price": {
+      "avg": {
+        "field": "price"
+      }
+    },
+    "max_price": {
+      "max": {
+        "field": "price"
+      }
+    }
+  }
+}
+```
+
+
 
 **Time** - 5:00
 
